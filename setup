@@ -64,9 +64,9 @@ apt-get -y update && apt-get -y upgrade
 
 # Install OpenCV dependencies
 echo "Installing OpenCV dependencies..."
-apt-get install libhdf5-dev libhdf5-serial-dev libhdf5-100
-apt-get install libatlas-base-dev
-apt-get install libjasper-dev
+apt-get install -y libhdf5-dev libhdf5-serial-dev libhdf5-100
+apt-get install -y libatlas-base-dev
+apt-get install -y libjasper-dev
 
 # Install pip
 echo "Installing pip..."
