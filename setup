@@ -58,6 +58,8 @@ apt-get -y install python3-picamera
 
 echo "Downloading NaturewatchCameraServer..."
 cd /home/pi
+
+python3 -c "import picamera"
 #wget "${OF_URL}"
 #mkdir openFrameworks
 #tar vxfz "${OF_FILE}" -C openFrameworks --strip-components 1
