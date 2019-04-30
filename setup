@@ -60,6 +60,7 @@ echo "Downloading NaturewatchCameraServer..."
 cd /home/pi
 
 python3 -c "import picamera"
+python3 -c "import cv2"
 #wget "${OF_URL}"
 #mkdir openFrameworks
 #tar vxfz "${OF_FILE}" -C openFrameworks --strip-components 1
