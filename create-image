@@ -15,9 +15,9 @@ fi
 image="opm.img"
 mount="mnt"
 script="setup"
-rpi_zip="raspbian.zip"
-#rpi_url="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/${rpi_zip}"
-rpi_url="https://downloads.raspberrypi.org/raspbian_lite_latest"
+rpi_zip="2017-07-05-raspbian-jessie-lite.zip"
+rpi_url="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/${rpi_zip}"
+
 # Unmount drives and general cleanup on exit, the trap ensures this will always
 # run execpt in the most extream cases.
 cleanup() {
@@ -36,7 +36,7 @@ cleanup() {
 trap cleanup EXIT
 
 # Download raspbian arm only if we have not already done so
-wget -O "${rpi_zip}" "${rpi_url}"
+[ ! -f "${rpi_zip}" ] && wget "${rpi_url}"
 
 # Clean the existing image files
 (ls *.img >> /dev/null 2>&1 && rm *.img) || echo "no .img files to remove"
