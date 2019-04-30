@@ -11,7 +11,7 @@ GPU_MEM=256
 # Setting some environment variables
 echo "OF_VERSION=${OF_VERSION}" >> /etc/environment
 
-# Replace /boot/cmdline.txt since it contains root device mapping to a PARTUUID that 
+# Replace /boot/cmdline.txt since it contains root device mapping to a PARTUUID that
 # changed during parted resize. We try to disable the autoresize here as well.
 echo "Replace /boot/cmdline.txt"
 echo "dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait quiet" > "${mount}/boot/cmdline.txt"
@@ -53,29 +53,31 @@ cat /boot/config.txt | grep "gpu_mem"
 echo "Installing packages."
 apt-get -y update
 apt-get -y install git
+apt-get -y install python-dev
+apt-get -y install python3-picamera
 
-echo "Downloading openFrameworks."
+echo "Downloading NaturewatchCameraServer..."
 cd /home/pi
-wget "${OF_URL}"
-mkdir openFrameworks
-tar vxfz "${OF_FILE}" -C openFrameworks --strip-components 1
-cd /home/pi/openFrameworks/scripts/linux/debian
+#wget "${OF_URL}"
+#mkdir openFrameworks
+#tar vxfz "${OF_FILE}" -C openFrameworks --strip-components 1
+#cd /home/pi/openFrameworks/scripts/linux/debian
 
 # This is needed to install everything automatically without interaction
-sed -i "s/apt-get/apt-get -y/g" install_dependencies.sh
+#sed -i "s/apt-get/apt-get -y/g" install_dependencies.sh
 
-./install_dependencies.sh
-make -j$(nproc) Release -C /home/pi/openFrameworks/libs/openFrameworksCompiled/project
+#./install_dependencies.sh
+#make -j$(nproc) Release -C /home/pi/openFrameworks/libs/openFrameworksCompiled/project
 
 # Test installation
-echo "Compiling polygonExample."
-cd /home/pi/openFrameworks/examples/graphics/polygonExample
-make -j$(nproc)
+#echo "Compiling polygonExample."
+#cd /home/pi/openFrameworks/examples/graphics/polygonExample
+#make -j$(nproc)
 
-echo "Setting up to run on boot."
-crontab -l > mycron
-echo "@reboot /home/pi/openFrameworks/examples/graphics/polygonExample/bin/polygonExample" >> mycron
-crontab mycron
-rm mycron
+#echo "Setting up to run on boot."
+#crontab -l > mycron
+#echo "@reboot /home/pi/openFrameworks/examples/graphics/polygonExample/bin/polygonExample" >> mycron
+#crontab mycron
+#rm mycron
 
-echo "Congratulations! Compiled version of openFrameworks $OF_VERSION has been setup!"
+echo "Congratulations! Your image has been setup!"
