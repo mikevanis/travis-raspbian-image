@@ -67,6 +67,11 @@ echo "Installing pip for python3..."
 wget https://bootstrap.pypa.io/get-pip.py
 python3 get-pip.py
 
+echo "Adding piwheels to pip.conf..."
+echo "[global]" >> /etc/pip.conf
+echo "extra-index-url=https://www.piwheels.hostedpi.com/simple" >> /etc/pip.conf
+cat /etc/pip.conf
+
 echo "Installing OpenCV with pip..."
 pip3 install opencv-contrib-python
 
