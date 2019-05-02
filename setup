@@ -63,6 +63,7 @@ apt-get -y install libatlas-base-dev
 apt-get -y install libjasper-dev
 apt-get -y install libcblas-dev
 apt-get -y install libwebp-dev
+apt-get -y install libtiff5
 #apt-get -y install libsm6 libxext6 libxrender-dev
 
 cd /home/pi
