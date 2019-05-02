@@ -67,6 +67,7 @@ apt-get -y install libtiff5
 apt-get -y install libilmbase-dev
 apt-get -y install libopenexr-dev
 apt-get -y install libgstreamer1.0-dev
+apt-get -y install libavcodec-dev libavutil-dev libavformat-dev libswscale-dev
 #apt-get -y install libsm6 libxext6 libxrender-dev
 
 cd /home/pi
