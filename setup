@@ -69,6 +69,7 @@ apt-get -y install libopenexr-dev
 apt-get -y install libgstreamer1.0-dev
 apt-get -y install libavcodec-dev libavutil-dev libavformat-dev libswscale-dev
 #apt-get -y install libsm6 libxext6 libxrender-dev
+apt-get -y install libgtk-3-dev
 
 cd /home/pi
 
