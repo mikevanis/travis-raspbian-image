@@ -30,6 +30,9 @@ echo "Setting hostname."
 echo "myraspberrypi" > /etc/hostname
 cat /etc/hostname
 
+echo "Enabling SSH."
+touch /boot/ssh
+
 echo "Setting gpu_mem."
 if grep -q "gpu_mem" /boot/config.txt
 then
@@ -42,7 +45,10 @@ cat /boot/config.txt | grep "gpu_mem"
 # Install Docker
 curl -sSL https://get.docker.com | sh
 
+# Add user to docker group
+usermod -aG docker pi
+
 # Test Docker
-docker run armhf/hello-world
+docker run hypriot/armhf-hello-world
 
 echo "Congratulations! Docker installed successfully."

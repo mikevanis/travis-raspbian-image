@@ -12,13 +12,11 @@ addons:
     - zip
 script:
 - sudo bash ./create-image
-- zip opm.img.zip opm.img
+- zip rpi-image.img.zip rpi-image.img
 deploy:
   provider: releases
   api_key:
-    secure: eXIX1Z621z/KMIITv/7lpdHHO8fo7zU5pSGD8oHoH/O36IO0YKbNQHf5VfPbEUyUJfZaH37ZbwOAZ2WSMNxR4zbq+skn00wYvHRy8V73/6opWL5p6kZfbVVOK5nNb9pU31BYCoU94rL9wPJasQVj85eiw/Guvp+4hNOP4pWyVJFO+aGArFJHCZAd6HqoUVgEwRhteTxhTSo+wAzdMTWfVtCXnZ/UEmBIZZUglM6SFe3mPwLnP1rgbDbLKT8c4ZmyCNL03CaDIWms/QHeqj0Bx3ty5SU22Xl1ZUG1iYxGGoT0n2o6rKKtquFeZwnyOJEdNT54jxZP8AAS3oD2y5hiCJ+RlKAmu6+Ea5xtkjX5agmSgqb6eAMZ3fOidPnpuxVkQj0/L5R/kaKIKcOa5tr9TFgVJo/2/KlZPEzSs0+mRyUH5zLDghl2KlrJ9YGaJSzL0n25d+dr+66+ygvwDWz5wkJW/Ta854vxbbl8A7UZ2hpTe0R2mU7GI3YGnzEJGE/ViOplpSVv60dV/thecqdJ1PIZKOtodAoABZFumu9dVhgSJ7tuXzpvOHgWwR5tU6Tr1T3hZ5K5FhxkMviZ7pvgceMDfzw5UKK2QGqneL4QLRVCqC1PSZsp/FGUeFx4rbef6qJRop648AL9ZJ2RY450w/o+rFOS3xvpEnfmVtr3hpQ=
-  file:
-    - "rpi-image.img.zip"
-  skip_cleanup: true
+    secure: Q1NXGrxkDX+PmXFvEcBKqYGD8Vamx2aJkjjNBbfnTK1g2PdEmRCSKaauzbIlAI9HDLC0HHMR2MSNs0x8S75nu/aIUvLI9ojX7AcTroFxR+xrhoO8qVjz1XOjrqjbxcM1wNtKqQYU/+Gsojbgwkaafb7ArYQHrZjaVjmRqd8BzFAJ55yTlrxillsoCfq6vv9spdhgm8kOnk7eyOfQnEtWQEdpQqOPjAVwWzFnLjOd9iLBOSZcZ+wfK8A8KBcREsMK7vIHhoYbeW9kcqCObo4CNdisMOaxrzte4N57LTU8yW7i35LoZ5a3OGGKWBAoLt7nx4ORxvVoTqL00ohVi9OIXi9WKNbXaLHc07f1JM5oerAabtWFa4iVk7G5aeJkN5VxbZ38vZl9bbuIvohg0wP8pYkN8Fl+JWBlUUtwDuoYrZ1GTjGkALCyX6Tpl+rquad97kGjNlu5WN/811WOnWFq2xG99mB9TWFEFDZ5UGGwAcd5xZNq48mw42XSLsBF7ej2ivh+F8x7p5WkqVF6vkWvNElyKhKisSuUEsI76JcYkF/z9EHuSW/SF4/3gDE3sflNr5meILXNu2PssmioqBWnVPTngFQulxYoUwdcXB7pousePh0Md/mQNJB9tuIch61eXHngZ6Fw+n/mUvEGAXHxBZQgfC+Bm6Rijie/24im3KA=
+  file: rpi-image.img.zip
   on:
-    tags: true
+    repo: mikevanis/travis-raspbian-image
