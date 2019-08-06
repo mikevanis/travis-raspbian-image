@@ -64,10 +64,8 @@ curl -fsSL https://download.docker.com/linux/raspbian/gpg | sudo apt-key add -
 apt-key fingerprint 0EBFCD88
 
 # Add repository
-sudo add-apt-repository \
-  "deb [arch=arm64] https://download.docker.com/linux/raspbian \
-  $(lsb_release -cs) \
-  stable"
+echo "deb [arch=armhf] https://download.docker.com/linux/raspbian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
 
 # Update again
 apt-get update
