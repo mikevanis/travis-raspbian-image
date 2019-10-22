@@ -1,16 +1,18 @@
 #!/bin/bash
-set -e
 
 echo "Hello. This is setup."
-
-GPU_MEM=256
-
 
 # Replace /boot/cmdline.txt since it contains root device mapping to a PARTUUID that
 # changed during parted resize. We try to disable the autoresize here as well.
 echo "Replace /boot/cmdline.txt"
-echo "dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait quiet" > "${mount}/boot/cmdline.txt"
+echo "dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=PARTUUID=d5fbc204-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait modules-load=dwc2,g_ether" > "${mount}/boot/cmdline.txt"
 cat "${mount}/boot/cmdline.txt"
+
+echo "Enabling OTG"
+echo "dtoverlay=dwc2" >> /boot/config.txt
+
+echo "Enabling SSH"
+touch /boot/ssh
 
 # Replace /etc/fstab since the non existing PARTUUID has to be changed here as well.
 echo "Replace /etc/fstab"
@@ -27,60 +29,19 @@ echo "Number of processor cores: ${cores}"
 echo "Checking disk space."
 df -h
 
-# Disable automatic filesystem expansion on boot
-#rm /usr/lib/raspi-config/init_resize.sh
-rm /etc/init.d/resize2fs_once
-rm /etc/rc3.d/S01resize2fs_once
-
 echo "Setting hostname."
-echo "camera" > /etc/hostname
+echo "nwcamera" > /etc/hostname
 cat /etc/hostname
 
-echo "Setting gpu_mem."
-if grep -q "gpu_mem" /boot/config.txt
-then
-    sed -i "s/gpu_mem.*/gpu_mem=${GPU_MEM}/" /boot/config.txt
-else
-    echo "gpu_mem=${GPU_MEM}" >> /boot/config.txt
+echo "Enabling camera"
+set_config_var start_x 1 /boot/config.txt
+CUR_GPU_MEM=$(get_config_var gpu_mem /boot/config.txt)
+if [ -z "$CUR_GPU_MEM" ] || [ "$CUR_GPU_MEM" -lt 128 ]; then
+  set_config_var gpu_mem 128 /boot/config.txt
 fi
-cat /boot/config.txt | grep "gpu_mem"
+sed /boot/config.txt -i -e "s/^startx/#startx/"
+sed /boot/config.txt -i -e "s/^fixup_file/#fixup_file/"
 
-echo "Installing required packages..."
-apt-get update
-
-# Install prerequisites
-apt-get install -y \
-  apt-transport-https \
-  ca-certificates \
-  curl \
-  gnupg2 \
-  software-properties-common \
-  git
-
-# Add docker's official key
-curl -fsSL https://download.docker.com/linux/raspbian/gpg | sudo apt-key add -
-
-# Check that the key exists
-apt-key fingerprint 0EBFCD88
-
-# Add repository
-echo "deb [arch=armhf] https://download.docker.com/linux/raspbian \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
-
-# Update again
-apt-get update
-
-# Install Docker
-apt-get install -y docker-ce=18.06.1~ce~3-0~raspbian
-
-# Add pi user to docker group
-usermod -aG docker $USER
-
-# Check that docker works
-docker run hypriot/armhf-hello-world
-
-cd /home/pi
-
-
-
-echo "Congratulations! Your image has been setup!"
+echo "Installing packages."
+apt-get -y update
+apt-get -y install git
