@@ -13,7 +13,7 @@ addons:
 script:
   - sudo bash ./create-image
   - zip nw.img.zip nw.img
- before_deploy:
+before_deploy:
   - git config --local user.name "mikevanis"
   - git config --local user.email "hello@mikevanis.com"
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
